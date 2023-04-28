@@ -1,0 +1,28 @@
+topic:
+  name: COUPON_TOPIC
+  partitions: 1
+  rf: 1
+server:
+  port: 9080
+spring:
+  kafka:
+    bootstrap-servers:
+      - 192.168.137.101:9092
+    properties:
+      schema.registry.url: http://192.168.137.103:8081
+    producer:
+      bootstrap-servers:
+        - 192.168.137.101:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      acks: 1
+      batch-size: 32000
+      client-id: hhmall-test-coupon-producer
+      retries: 2147483647
+      properties:
+        interceptor.classes: io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor
+    template:
+      default-topic:
+logging:
+  level:
+    root: info
